@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GD Macro Compare v2.0</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <span class="prompt">C:\></span>
+        <span class="title">GD Macro Compare v2.0</span>
+      </div>
+      <div class="window-controls">
+        <span>—</span><span>▢</span><span>✕</span>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="main-panel">
+        <div class="panel load-panel">
+          <div class="panel-head">LOAD FILES</div>
+
+          <div class="files-row">
+            <div class="file-column">
+              <div class="subhead">[ FILE A - ORIGINAL ]</div>
+              <div class="dropzone" data-target="fileA">
+                <input id="fileA" type="file" accept=".json,.txt,.mhr" hidden />
+                <div class="dropzone-inner">
+                  <div class="dz-icon">⧉</div>
+                  <div>Drag & Drop file here</div>
+                  <div class="muted">or click to select</div>
+                </div>
+              </div>
+              <div class="file-info">
+                <div class="file-name" id="fileAName">No file selected</div>
+                <div class="file-size" id="fileACount">Size: 0 events</div>
+              </div>
+            </div>
+
+            <div class="vs-box">VS</div>
+
+            <div class="file-column">
+              <div class="subhead">[ FILE B - MODIFIED ]</div>
+              <div class="dropzone" data-target="fileB">
+                <input id="fileB" type="file" accept=".json,.txt,.mhr" hidden />
+                <div class="dropzone-inner">
+                  <div class="dz-icon">⧉</div>
+                  <div>Drag & Drop file here</div>
+                  <div class="muted">or click to select</div>
+                </div>
+              </div>
+              <div class="file-info">
+                <div class="file-name" id="fileBName">No file selected</div>
+                <div class="file-size" id="fileBCount">Size: 0 events</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="support-row">
+            <div class="support-left">
+              <span class="label">SUPPORT FORMATS:</span>
+              <span class="chip">.json</span>
+              <span class="chip">.txt</span>
+              <span class="chip">.mhr</span>
+            </div>
+            <div class="support-right">
+              <span class="label">DRAG & DROP:</span>
+              <span>Kéo-thả file vào khung</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel result-panel">
+          <div class="panel-head">RESULT</div>
+
+          <div class="result-top">
+            <div class="status-dot">✓</div>
+            <div>
+              <div class="status-title" id="statusTitle">READY</div>
+              <div class="status-sub" id="statusSub">Chọn 2 file để so sánh</div>
+            </div>
+          </div>
+
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-label">TOTAL EVENTS A</div>
+              <div class="stat-value" id="statA">0</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">TOTAL EVENTS B</div>
+              <div class="stat-value" id="statB">0</div>
+            </div>
+            <div class="stat-card green">
+              <div class="stat-label">ADDED INPUTS</div>
+              <div class="stat-value" id="statAdded">0</div>
+            </div>
+            <div class="stat-card red">
+              <div class="stat-label">REMOVED INPUTS</div>
+              <div class="stat-value" id="statRemoved">0</div>
+            </div>
+            <div class="stat-card yellow">
+              <div class="stat-label">DIFFERENT FRAMES</div>
+              <div class="stat-value" id="statDiffFrames">0</div>
+            </div>
+          </div>
+
+          <div class="safety-box">
+            <div class="safety-head">
+              <span>SAFETY SCORE</span>
+              <span id="safetyPercent">0.00%</span>
+            </div>
+            <div class="bar">
+              <div class="bar-fill" id="safetyBar"></div>
+            </div>
+            <div class="safety-note" id="safetyNote">—</div>
+          </div>
+
+          <div class="tables">
+            <div class="table-block">
+              <div class="table-title green">ADDED INPUTS (<span id="addedCount">0</span>)</div>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Frame</th>
+                      <th>Type</th>
+                      <th>P2</th>
+                      <th>Details</th>
+                    </tr>
+                  </thead>
+                  <tbody id="addedTable">
+                    <tr><td colspan="5" class="empty">No added inputs</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="table-block">
+              <div class="table-title red">REMOVED INPUTS (<span id="removedCount">0</span>)</div>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Frame</th>
+                      <th>Type</th>
+                      <th>P2</th>
+                      <th>Details</th>
+                    </tr>
+                  </thead>
+                  <tbody id="removedTable">
+                    <tr><td colspan="5" class="empty">No removed inputs</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="table-block">
+              <div class="table-title yellow">DIFFERENT FRAMES (<span id="diffFrameCount">0</span>)</div>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Frame A</th>
+                      <th>Frame B</th>
+                      <th>Type</th>
+                      <th>P2</th>
+                    </tr>
+                  </thead>
+                  <tbody id="diffFrameTable">
+                    <tr><td colspan="5" class="empty">No different frames</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <aside class="side-panel">
+        <div class="panel actions-panel">
+          <div class="panel-head">ACTIONS</div>
+          <button class="action-btn primary" id="btnCompare">▶ Compare Files <span>F5</span></button>
+          <button class="action-btn" id="btnClear">🗑 Clear All</button>
+          <button class="action-btn" id="btnSwap">⇄ Swap Files</button>
+          <button class="action-btn" id="btnExport">⭳ Export Report <span>.txt</span></button>
+          <button class="action-btn" id="btnAbout">ⓘ About <span>v2.0</span></button>
+        </div>
+
+        <div class="panel summary-panel">
+          <div class="panel-head">SUMMARY</div>
+          <div class="summary-text" id="summaryText">
+            <div>File A: —</div>
+            <div>File B: —</div>
+            <div>Events A: 0</div>
+            <div>Events B: 0</div>
+            <div>Added Inputs: 0</div>
+            <div>Removed Inputs: 0</div>
+            <div>Different Frames: 0</div>
+            <div>Safety Score: 0.00%</div>
+            <div>Compatibility: 0%</div>
+          </div>
+        </div>
+
+        <div class="panel tips-panel">
+          <div class="panel-head">TIPS</div>
+          <div class="tips">
+            <div>&gt; Safety Score càng cao càng tốt.</div>
+            <div>&gt; Added Inputs: B có thêm input so với A.</div>
+            <div>&gt; Removed Inputs: B thiếu input so với A.</div>
+            <div>&gt; Different Frames: cùng kiểu input nhưng frame khác nhau.</div>
+            <div>&gt; Kéo-thả file vào khung để chọn nhanh.</div>
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <footer class="footer">
+      <span id="footerLeft">READY</span>
+      <span>Made by nat :3</span>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
